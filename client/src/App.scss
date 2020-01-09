@@ -1,0 +1,92 @@
+$main: #125382;
+$lightmain: #fff;
+
+body,
+html,
+#root {
+  height: 100%;
+  background-color: $lightmain;
+}
+
+@function get-black-color($amount) {
+  @return lighten(#000, $amount);
+}
+
+.Live-main {
+  height: 100%;
+  background-color: get-black-color(75%);
+  padding: 2em;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  .env {
+    background-color: get-black-color(60%);
+    font-size: 1.2em;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.home-wrap {
+  height: 100%;
+  filter: drop-shadow(-4px 6px 12px #364e70);
+
+  .home-main {
+    clip-path: polygon(
+      33% 0,
+      70% 0%,
+      100% 0,
+      100% 70%,
+      70% 100%,
+      0 100%,
+      0% 70%,
+      0 29%
+    );
+    height: 100%;
+    background-color: $main;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    justify-content: space-evenly;
+
+    .title {
+      color: $lightmain;
+
+      h1 {
+        margin: 0;
+      }
+
+      small {
+        font-size: 0.95em;
+      }
+    }
+
+    a {
+      display: flex;
+      flex-flow: column wrap;
+      align-content: center;
+      justify-content: center;
+      text-decoration: none;
+      margin: 0em 1em;
+
+      background-color: $main;
+      color: $lightmain;
+
+      border: 6px solid $lightmain;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      font-size: 2em;
+
+      transition: 0.5s background-color, 0.3s color;
+
+      &:hover {
+        color: $main;
+        background-color: $lightmain;
+      }
+    }
+  }
+}
