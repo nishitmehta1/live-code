@@ -14,14 +14,14 @@ html,
 
 .Live-main {
   height: 100%;
-  background-color: get-black-color(75%);
+  background-color: $main;
   padding: 2em;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   justify-content: center;
 
   .env {
-    background-color: get-black-color(60%);
+    background-color: $lightmain;
     font-size: 1.2em;
     resize: none;
     &:focus {
@@ -30,63 +30,71 @@ html,
   }
 }
 
-.home-wrap {
+.home-outer {
   height: 100%;
-  filter: drop-shadow(-4px 6px 12px #364e70);
-
-  .home-main {
-    clip-path: polygon(
-      33% 0,
-      70% 0%,
-      100% 0,
-      100% 70%,
-      70% 100%,
-      0 100%,
-      0% 70%,
-      0 29%
-    );
+  .home-wrap {
+    // filter: drop-shadow(-4px 6px 12px #364e70);
     height: 100%;
-    background-color: $main;
-    display: flex;
-    flex-flow: column wrap;
-    align-content: center;
-    justify-content: space-evenly;
-
-    .title {
-      color: $lightmain;
-
-      h1 {
-        margin: 0;
-      }
-
-      small {
-        font-size: 0.95em;
-      }
-    }
-
-    a {
+    .home-main {
+      clip-path: polygon(
+        33% 0,
+        70% 0%,
+        100% 0,
+        100% 70%,
+        70% 100%,
+        0 100%,
+        0% 70%,
+        0 29%
+      );
+      height: 100%;
+      background-color: $main;
       display: flex;
       flex-flow: column wrap;
       align-content: center;
-      justify-content: center;
-      text-decoration: none;
-      margin: 0em 1em;
+      justify-content: space-evenly;
 
-      background-color: $main;
-      color: $lightmain;
+      .title {
+        color: $lightmain;
 
-      border: 6px solid $lightmain;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      font-size: 2em;
+        h1 {
+          margin: 0;
+        }
 
-      transition: 0.5s background-color, 0.3s color;
-
-      &:hover {
-        color: $main;
-        background-color: $lightmain;
+        small {
+          font-size: 0.95em;
+        }
       }
+
+      a {
+        display: flex;
+        flex-flow: column wrap;
+        align-content: center;
+        justify-content: center;
+        text-decoration: none;
+        margin: 0em 1em;
+
+        background-color: $main;
+        color: $lightmain;
+
+        border: 6px solid $lightmain;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        font-size: 2em;
+
+        transition: 0.5s background-color, 0.3s color;
+
+        &:hover {
+          color: $main;
+          background-color: $lightmain;
+        }
+      }
+    }
+
+    #name,
+    #room {
+      margin: 1em 0em 0em 0em;
+      width: 70%;
     }
   }
 }
