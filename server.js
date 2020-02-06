@@ -16,25 +16,27 @@ const io = require('socket.io')(http);
 io.on('connection', function(socket) {
   console.log('a user connected');
   socket.on('join', ({ name, roomid }, callback) => {
-    console.log(name, roomid);
-    // const { error, user } = addUser({ id: socket.id, name, room });
-    // if (error) {
-    //   return callback(error);
-    // }
-
+    // console.log(name, roomid);
     user = {
       name: name,
       room: roomid
     };
+
+    socket.in(user.room).emit('user connected');
+
     socket.join(user.room);
   });
 
+  socket.on('updateText', ({ newText, room }, callback) => {
+    // console.log(newText, room);
+    // console.log(io.sockets.adapter.rooms[room]);
+    newText = newText.toString();
+    socket.in(room).emit('update', { newText });
+  });
+
   socket.on('checkRoom', ({ room }, callback) => {
-    console.log('LOL : ' + room);
-    console.log(io.sockets.adapter.rooms);
-    if (io.sockets.adapter.rooms[room]) {
-      console.log('True');
-    } else {
+    // console.log(io.sockets.adapter.rooms);
+    if (!io.sockets.adapter.rooms[room]) {
       socket.emit('falseRoom');
     }
   });

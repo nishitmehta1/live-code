@@ -3,10 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 
-let socket;
 const shortid = require('shortid');
-const ENDPOINT = 'http://localhost:8000';
-
+// let socket = this.props.socket;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -24,17 +22,33 @@ class Home extends Component {
     this.setState({
       roomid: roomid
     });
-    socket = io(ENDPOINT);
-    socket.emit('join', { name, roomid }, () => {});
+    this.props.socket.emit('join', { name, roomid }, () => {});
+
+    this.props.socket.on('user connected', () => {
+      console.log('Connected');
+    });
+
+    // socket.on('update', () => {
+    //   console.log('rEACHED');
+    //   // this.setState({
+    //   //   text: newText.newText
+    //   // });
+    // });
+
     this.props.history.push(`/live/${roomid}`);
   };
 
-  enterRoom = () => {
+  enterRoom = event => {
+    event.preventDefault();
     const name = this.state.name;
-    const room = this.state.room;
-    socket = io(ENDPOINT);
-    socket.emit('join', { name, room }, () => {});
-    this.props.history.push(`/live/${room}`);
+    const roomid = this.state.room;
+    this.props.socket.emit('join', { name, roomid }, () => {});
+
+    // socket.on('user connected', () => {
+    //   console.log('Connected');
+    // });
+
+    this.props.history.push(`/live/${roomid}`);
   };
 
   render() {
@@ -89,42 +103,46 @@ class Home extends Component {
                       <span aria-hidden='true'>&times;</span>
                     </button>
                   </div>
-                  <div className='modal-body'>
-                    <input
-                      id='name'
-                      type='text'
-                      value={this.state.name}
-                      onChange={event => {
-                        this.setState({ name: event.target.value });
-                      }}
-                    />
-                    <input
-                      id='room'
-                      type='text'
-                      value={this.state.room}
-                      onChange={event => {
-                        this.setState({ room: event.target.value });
-                      }}
-                    />
-                  </div>
-                  <div className='modal-footer'>
-                    <button
-                      type='button'
-                      className='btn btn-secondary'
-                      data-dismiss='modal'
-                    >
-                      Close
-                    </button>
-                    <button
-                      type='button'
-                      className='btn btn-primary'
-                      onClick={() => {
-                        this.enterRoom();
-                      }}
-                    >
-                      Join Room
-                    </button>
-                  </div>
+                  <form action=''>
+                    <div className='modal-body'>
+                      <input
+                        id='name'
+                        type='text'
+                        value={this.state.name}
+                        onChange={event => {
+                          this.setState({ name: event.target.value });
+                        }}
+                      />
+                      <input
+                        id='room'
+                        type='text'
+                        value={this.state.room}
+                        onChange={event => {
+                          this.setState({ room: event.target.value });
+                        }}
+                      />
+                    </div>
+                    <div className='modal-footer'>
+                      <button
+                        type='button'
+                        className='btn btn-secondary'
+                        data-dismiss='modal'
+                      >
+                        Close
+                      </button>
+                      <button
+                        type='submit'
+                        data-dismiss='modal'
+                        data-backdrop='false'
+                        className='btn btn-primary'
+                        onClick={event => {
+                          this.enterRoom(event);
+                        }}
+                      >
+                        Join Room
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
